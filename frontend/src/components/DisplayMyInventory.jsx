@@ -1,6 +1,8 @@
 import React from 'react';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
+import cookie from 'cookie'
+// import { UserContext } from "./UserContext";
 
 const ItemContainer = styled.div`
     display:flex;
@@ -26,11 +28,12 @@ const ItemBox = styled.div`
     width: 300px;
 `
 
-export default function DisplayInventory() {
+export default function DisplayMyInventory() {
     const [items, setItems] = useState([]);
+    // const { userProfile } = useContext(UserContext);
 
     useEffect(() => {
-        fetch("http://localhost:8080/inventory")
+        fetch(`http://localhost:8080/inventory/${cookie.parse(document.cookie).id}`)
             .then(res => res.json())
             .then(data => setItems(data))
     }, [])
@@ -38,9 +41,8 @@ export default function DisplayInventory() {
     return (
         <>
             <HeaderContainer>
-                <h1>Current Inventory</h1>
+                <h1>{cookie.parse(document.cookie).firstName}'s Inventory</h1>
             </HeaderContainer>
-
             <ItemContainer>
                 {items.map((item) => {
                     return (
@@ -53,6 +55,7 @@ export default function DisplayInventory() {
                 })}
             </ItemContainer>
         </>
+
 
 
     )

@@ -1,6 +1,7 @@
 import DisplayInventory from "./components/DisplayInventory";
 import Login from "./components/Login";
 import CreateAccount from "./components/CreateAccount";
+import DisplayMyInventory from "./components/DisplayMyInventory";
 
 import "./App.css";
 import logo from "./media/logo3.png";
@@ -9,8 +10,9 @@ import headerBackground from "./media/background2.png";
 
 import { useState, useContext } from "react";
 import styled from "styled-components";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { UserContext } from "./components/UserContext.js";
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import cookie from "cookie";
+// import { UserContext } from "./components/UserContext.js";
 
 const AppContainer = styled.div`
   display: flex;
@@ -69,38 +71,61 @@ const Display = styled.div`
 `;
 
 export default function App() {
+  const navigate = useNavigate();
+
+  const Logout = () => {
+    document.cookie = "logedIn=false";
+    document.cookie = "firstName=null";
+    document.cookie = "lastName=null";
+    document.cookie = "username=null";
+    navigate("/");
+  };
   return (
-    <Router>
-      <AppContainer>
-        <NavBar>
-          <Link to="/">
-            <NavbarLinks className="active">Home</NavbarLinks>
-          </Link>
-          {/* <Link to={`/myinventory/${id}`}>
-            <NavbarLinks class="active">My Inventory</NavbarLinks>
-          </Link> */}
-          <Link to="/Login">
-            <NavbarLinks className="active">Login</NavbarLinks>
-          </Link>
-          <Link to="/createaccount">
-            <NavbarLinks className="active">Create Account</NavbarLinks>
-          </Link>
-        </NavBar>
-        <Header>
-          <Logo src={logo} alt="logo" />
-        </Header>
-        <BodyContainer>
-          <Display>
-            <Routes>
-              <Route path="/" element={<DisplayInventory />} />
-              <Route path="/display/:id" />
-              <Route path="/myinventory/:id" />
-              <Route path="/login" element={<Login />} />
-              <Route path="/createaccount" element={<CreateAccount />} />
-            </Routes>
-          </Display>
-        </BodyContainer>
-      </AppContainer>
-    </Router>
+    <AppContainer>
+      <NavBar>
+        <Link to="/">
+          <NavbarLinks className="active">Home</NavbarLinks>
+        </Link>
+        {/* {console.log(userProfile)} */}
+        {/* {console.log(logedIn)} */}
+        {console.log(cookie.parse(document.cookie).logedIn)}
+        {cookie.parse(document.cookie).logedIn === "true" ? (
+          <>
+            {/* <Link to={`/myinventory/${userProfile.id}`}>
+              <NavbarLinks className="active">My Inventory</NavbarLinks>
+            </Link> */}
+            <Link to="/profile">
+              <NavbarLinks className="active">Profile</NavbarLinks>
+            </Link>
+            <NavbarLinks type="button" className="active" onClick={Logout}>
+              Logout
+            </NavbarLinks>
+          </>
+        ) : (
+          <>
+            <Link to="/Login">
+              <NavbarLinks className="active">Login</NavbarLinks>
+            </Link>
+            <Link to="/createaccount">
+              <NavbarLinks className="active">Create Account</NavbarLinks>
+            </Link>
+          </>
+        )}
+      </NavBar>
+      <Header>
+        <Logo src={logo} alt="logo" />
+      </Header>
+      <BodyContainer>
+        <Display>
+          <Routes>
+            <Route path="/" element={<DisplayInventory />} />
+            <Route path="/display/:id" />
+            <Route path="/myinventory/:id" element={<DisplayMyInventory />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/createaccount" element={<CreateAccount />} />
+          </Routes>
+        </Display>
+      </BodyContainer>
+    </AppContainer>
   );
 }

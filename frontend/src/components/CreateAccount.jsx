@@ -28,6 +28,7 @@ const LoginInfo = styled.label`
 `
 export default function CreateAccount() {
     const [success, setSuccess] = useState(true)
+    const [available, setAvailable] = useState(true)
     const navigate = useNavigate();
 
     const handleSubmit = () => {
@@ -37,23 +38,31 @@ export default function CreateAccount() {
         let password = document.getElementById('password').value
 
         if (firstname && lastname && username && password) {
-            let newUser = {
-                "First Name": firstname,
-                "Last Name": lastname,
-                "Username": username,
-                "Password": password,
-            }
-            console.log(newUser)
-            fetch(`http://localhost:8080/createaccount`, {
-                method: "POST",
-                body: JSON.stringify(newUser),
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            })
-                .then(() => {
-                    console.log("User Success")
-                    navigate('/login')
+            fetch(`http://localhost:8080/users`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.find(user => user.Username === username)) {
+                        setAvailable(false)
+                    } else {
+                        let newUser = {
+                            "First Name": firstname,
+                            "Last Name": lastname,
+                            "Username": username,
+                            "Password": password,
+                        }
+                        fetch(`http://localhost:8080/createAccount`, {
+                            method: "POST",
+                            body: JSON.stringify(newUser),
+                            headers: {
+                                "Content-Type": "application/json",
+                            }
+                        })
+                            .then(() => {
+                                console.log("User Success")
+                                navigate('/login')
+                            })
+
+                    }
                 })
         } else {
             setSuccess(false)
@@ -78,10 +87,11 @@ export default function CreateAccount() {
                 </LoginInfo>
                 <LoginInfo>
                     Password:
-                    <input type="text" name="password" id="password" />
+                    <input type="password" name="password" id="password" />
                 </LoginInfo>
                 <button type="button" onClick={handleSubmit}>Submit</button>
                 {success ? <></> : <h4>Please Fill Out All Categories</h4>}
+                {available ? <></> : <h4>Username is Already Being Used</h4>}
             </Form>
         </LoginContainer>
 
