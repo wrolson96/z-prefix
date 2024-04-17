@@ -2,17 +2,19 @@ import DisplayInventory from "./components/DisplayInventory";
 import Login from "./components/Login";
 import CreateAccount from "./components/CreateAccount";
 import DisplayMyInventory from "./components/DisplayMyInventory";
+import CreateNewItem from "./components/CreateNewItem";
+import Profile from "./components/Profile";
+import EditItem from "./components/EditItem";
+import DisplayItem from "./components/DisplayItem";
 
 import "./App.css";
 import logo from "./media/logo3.png";
 import background from "./media/background.png";
 import headerBackground from "./media/background2.png";
 
-import { useState, useContext } from "react";
 import styled from "styled-components";
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import cookie from "cookie";
-// import { UserContext } from "./components/UserContext.js";
 
 const AppContainer = styled.div`
   display: flex;
@@ -51,6 +53,7 @@ const Logo = styled.img`
   height: 300px;
   border-radius: 150px;
   filter: drop-shadow(0px 0px 50px black);
+  margin: 30px;
 `;
 const BodyContainer = styled.div`
   flex: 1;
@@ -86,14 +89,14 @@ export default function App() {
         <Link to="/">
           <NavbarLinks className="active">Home</NavbarLinks>
         </Link>
-        {/* {console.log(userProfile)} */}
-        {/* {console.log(logedIn)} */}
-        {console.log(cookie.parse(document.cookie).logedIn)}
         {cookie.parse(document.cookie).logedIn === "true" ? (
           <>
-            {/* <Link to={`/myinventory/${userProfile.id}`}>
+            <Link to={`/myInventory/${cookie.parse(document.cookie).id}`}>
               <NavbarLinks className="active">My Inventory</NavbarLinks>
-            </Link> */}
+            </Link>
+            <Link to="/createNewItem">
+              <NavbarLinks className="active">Create New</NavbarLinks>
+            </Link>
             <Link to="/profile">
               <NavbarLinks className="active">Profile</NavbarLinks>
             </Link>
@@ -103,10 +106,10 @@ export default function App() {
           </>
         ) : (
           <>
-            <Link to="/Login">
+            <Link to="/login">
               <NavbarLinks className="active">Login</NavbarLinks>
             </Link>
-            <Link to="/createaccount">
+            <Link to="/createAccount">
               <NavbarLinks className="active">Create Account</NavbarLinks>
             </Link>
           </>
@@ -118,11 +121,26 @@ export default function App() {
       <BodyContainer>
         <Display>
           <Routes>
-            <Route path="/" element={<DisplayInventory />} />
-            <Route path="/display/:id" />
-            <Route path="/myinventory/:id" element={<DisplayMyInventory />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/createaccount" element={<CreateAccount />} />
+            {cookie.parse(document.cookie).logedIn === "true" ? (
+              <>
+                <Route path="/" element={<DisplayInventory />} />
+                <Route path="/display/:id" element={<DisplayItem />} />
+                <Route path="/createNewItem" element={<CreateNewItem />} />
+                <Route
+                  path="/myInventory/:id"
+                  element={<DisplayMyInventory />}
+                />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/editItem/:id" element={<EditItem />} />
+              </>
+            ) : (
+              <>
+                <Route path="/" element={<DisplayInventory />} />
+                <Route path="/display/:id" element={<DisplayItem />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/createAccount" element={<CreateAccount />} />
+              </>
+            )}
           </Routes>
         </Display>
       </BodyContainer>

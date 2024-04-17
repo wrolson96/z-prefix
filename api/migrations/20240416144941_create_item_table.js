@@ -7,7 +7,7 @@ exports.up = function (knex) {
     table.increments("id").primary();
     table.integer("UserId", 5).notNullable();
     table.string("Item Name", 50).notNullable();
-    table.string("Description", 100).notNullable();
+    table.string("Description").notNullable();
     table.integer("Quantity", 50).notNullable();
   });
 };

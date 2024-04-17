@@ -9,8 +9,8 @@ exports.seed = async function (knex) {
     {
       "First Name": "The",
       "Last Name": "Dude",
-      Username: "The Dude",
-      Password: "abc123",
+      Username: "TheDude",
+      Password: "123",
     },
   ]);
 };

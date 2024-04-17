@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom'
-import cookie from "cookie"
-// import { UserContext } from "./UserContext.js";
 
 const LoginContainer = styled.div`
     display: flex;
@@ -31,7 +29,6 @@ const LoginInfo = styled.label`
 
 export default function CreateAccount() {
     const [accountExists, setAccountExists] = useState(true)
-    // const { userProfile, setUserProfile, logedIn, setLogedIn } = useContext(UserContext);
     const navigate = useNavigate();
 
     const handleSubmit = () => {
@@ -40,16 +37,13 @@ export default function CreateAccount() {
         fetch(`http://localhost:8080/userVerify/${username}/${password}`)
             .then(res => res.json())
             .then(data => {
-                console.log("this is the data:", data)
                 if (data) {
-                    // setLogedIn(true)
-                    // setUserProfile(data[0])
                     document.cookie = "logedIn=true"
                     document.cookie = `id=${data[0].id}`
                     document.cookie = `username=${data[0].Username}`
                     document.cookie = `firstName=${data[0]['First Name']}`
                     document.cookie = `lastName=${data[0]['Last Name']}`
-                    navigate(`/myinventory/${data[0].id}`)
+                    navigate(`/myInventory/${data[0].id}`)
                 } else {
                     setAccountExists(false)
                 }

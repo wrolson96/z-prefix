@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom"
 
 const ItemContainer = styled.div`
     display:flex;
@@ -28,11 +29,13 @@ const ItemBox = styled.div`
 
 export default function DisplayInventory() {
     const [items, setItems] = useState([]);
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch("http://localhost:8080/inventory")
             .then(res => res.json())
             .then(data => setItems(data))
+            .catch(err => console.log(err))
     }, [])
 
     return (
@@ -44,9 +47,17 @@ export default function DisplayInventory() {
             <ItemContainer>
                 {items.map((item) => {
                     return (
-                        <ItemBox key={item.id} id={item.id}>
+                        <ItemBox key={item.id} id={item.id} onClick={() => navigate(`/display/${item.id}`)}>
                             <p>Item: {item["Item Name"]}</p>
-                            <p>Description: {item["Description"]}</p>
+                            {(item["Description"].length < 100) ?
+                                <>
+                                    <p>Description: {item["Description"]}</p>
+                                </>
+                                :
+                                <>
+                                    <p>Description: {item["Description"].slice(0, 100) + "..."}</p>
+                                </>
+                            }
                             <p>Quantity in Stock: {item["Quantity"]}</p>
                         </ItemBox>
                     )

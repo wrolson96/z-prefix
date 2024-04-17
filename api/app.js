@@ -18,7 +18,7 @@ app.get("/inventory", (req, res) => {
     })
     .catch((err) => res.status(404).send("No items found: err->", err));
 });
-//user inventory list
+//user's inventory list
 app.get("/inventory/:id", (req, res) => {
   knex("item")
     .select("*")
@@ -51,18 +51,26 @@ app.get("/userVerify/:username/:password", (req, res) => {
     })
     .catch((err) => res.status(404).send("User Does Not Exist", err));
 });
+//Get one item
+app.get("/item/:id", (req, res) => {
+  knex("item")
+    .select("*")
+    .where("id", req.params.id)
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => res.status(404).send("Item Does Not Exist", err));
+});
 
 //POSTS
 //new account creation
 app.post("/createAccount", (req, res) => {
-  console.log(req.body);
   let newUser = {
     "First Name": req.body["First Name"],
     "Last Name": req.body["Last Name"],
     Username: req.body["Username"],
     Password: req.body["Password"],
   };
-  console.log("new user");
   knex("user")
     .insert(newUser)
     .then(() => {
@@ -72,12 +80,55 @@ app.post("/createAccount", (req, res) => {
       res.status(404).send("Failed to add User: error -> ", err);
     });
 });
+//New Item Creation
+app.post("/createItem", (req, res) => {
+  let newItem = {
+    UserId: req.body.UserId,
+    "Item Name": req.body["Item Name"],
+    Description: req.body.Description,
+    Quantity: req.body.Quantity,
+  };
+  knex("item")
+    .insert(newItem)
+    .then(() => {
+      res.status(200).send("Item Added Successfully");
+    })
+    .catch((err) => {
+      res.status(404).send("Failed to add Item: error -> ", err);
+    });
+});
 
 //PATCHES
-// app.patch()
+app.patch("/editItem/:id", (req, res) => {
+  let editedItem = {
+    UserId: req.body.UserId,
+    "Item Name": req.body["Item Name"],
+    Description: req.body.Description,
+    Quantity: req.body.Quantity,
+  };
+  knex("item")
+    .where("id", req.params.id)
+    .update(editedItem)
+    .then(() => {
+      res.status(200).send("item successfully updated");
+    })
+    .catch(() => {
+      res.status(404).send("item failed to update");
+    });
+});
 
 //DELETES
-// app.delete()
+app.delete("/deleteItem/:id", (req, res) => {
+  knex("item")
+    .where("id", req.params.id)
+    .del()
+    .then(() => {
+      res.status(204).send("Item successfully deleted");
+    })
+    .catch(() => {
+      res.status(404).send("Item failed to delete");
+    });
+});
 
 //LISTEN
 app.listen(PORT, () => {
