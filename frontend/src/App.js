@@ -52,7 +52,9 @@ const Header = styled.header`
 const Logo = styled.img`
   height: 300px;
   border-radius: 150px;
-  filter: drop-shadow(0px 0px 50px black);
+  border: solid;
+  border-color: #ab0140;
+  box-shadow: 2px 2px 50px 30px black;
   margin: 30px;
 `;
 const BodyContainer = styled.div`
@@ -66,7 +68,6 @@ const BodyContainer = styled.div`
   justify-content: center;
 `;
 const Display = styled.div`
-  margin: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;

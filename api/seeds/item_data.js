@@ -8,20 +8,15 @@ exports.seed = async function (knex) {
   await knex("item").insert([
     {
       UserId: 1,
-      "Item Name": "Boots",
-      Description: "Made for Walking",
-      Quantity: "5",
-    },
-    {
-      UserId: 1,
-      "Item Name": "Elder Wand",
-      Description: "oculus reparo",
+      "Item Name": "Stick",
+      Description:
+        "I hope you're pleased with yourselves. We could all have been killed — or worse, expelled. Now if you don't mind, I'm going to bed.",
       Quantity: "1",
     },
     {
       UserId: 1,
       "Item Name": "An Old Mans Walking Stick",
-      Description: "You Shall Not Pass",
+      Description: "A Wizard Is Never Late, Frodo Baggins",
       Quantity: "3",
     },
     {
@@ -32,7 +27,7 @@ exports.seed = async function (knex) {
     },
     {
       UserId: 1,
-      "Item Name": "Lazer Stick",
+      "Item Name": "Lazer",
       Description: "May the Force be With You",
       Quantity: "7",
     },

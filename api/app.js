@@ -38,13 +38,24 @@ app.get("/users", (req, res) => {
     })
     .catch((err) => res.status(404).send("No items found: err->", err));
 });
+//fetch encrypted password
+app.get("/password/:username", (req, res) => {
+  knex("user")
+    .select("Password")
+    .where({
+      Username: req.params.username,
+    })
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => res.status(404).send("User Does Not Exist", err));
+});
 //check for account
-app.get("/userVerify/:username/:password", (req, res) => {
+app.get("/userVerify/:username", (req, res) => {
   knex("user")
     .select("*")
     .where({
       Username: req.params.username,
-      Password: req.params.password,
     })
     .then((data) => {
       res.status(200).send(data);

@@ -10,7 +10,7 @@ exports.seed = async function (knex) {
       "First Name": "The",
       "Last Name": "Dude",
       Username: "TheDude",
-      Password: "123",
+      Password: "$2a$10$AU60.PuXb/lhdp2DD99R.uWTRer/adHjVNsqTKikZJFpsGDTpW3Va",
     },
   ]);
 };

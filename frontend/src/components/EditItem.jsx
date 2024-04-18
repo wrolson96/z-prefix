@@ -21,12 +21,24 @@ const Form = styled.form`
     justify-content: center;
     padding:20px;
 `
-const TextHeader = styled.h1`
-    padding-bottom:20px;
-    margin:0;
-`
 const ItemInfo = styled.label`
     padding-bottom:20px;
+`
+const HeaderContainer = styled.div`
+    display:flex;
+    justify-content: center;
+    width:100vw;
+    background-image: linear-gradient(#000027,#4f0131,#000027);    
+    border-bottom: solid;
+    border-color: black;
+    border-width: 10px;
+    padding:10px;
+`
+const HeaderText = styled.h1`
+    font-size: 35px;
+  background: -webkit-linear-gradient(#fbd127,#fb0f00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `
 export default function CreateNewItem() {
     const [success, setSuccess] = useState(true)
@@ -76,24 +88,29 @@ export default function CreateNewItem() {
     }
 
     return (
-        <DataContainer>
-            <Form>
-                <TextHeader>Edit Item</TextHeader>
-                <ItemInfo>
-                    Item Name:
-                    <input type="text" name="Item Name" id="itemName" value={selectedItem['Item Name'] || ''} onChange={handleChange} />
-                </ItemInfo>
-                <ItemInfo>
-                    Description:
-                    <input type="text" name="Description" id="description" value={selectedItem.Description || ''} onChange={handleChange} />
-                </ItemInfo>
-                <ItemInfo>
-                    Quantity:
-                    <input type="number" name="Quantity" id="quantity" value={selectedItem.Quantity || ''} onChange={handleChange} />
-                </ItemInfo>
-                <button type="button" onClick={handleSubmit}>Submit</button>
-                {success ? <></> : <h4>Data Invalid</h4>}
-            </Form>
-        </DataContainer>
+        <>
+            <HeaderContainer>
+                <HeaderText>Edit Item</HeaderText>
+            </HeaderContainer>
+            <DataContainer>
+                <Form>
+                    <ItemInfo>
+                        Item Name:
+                        <input type="text" name="Item Name" id="itemName" value={selectedItem['Item Name'] || ''} onChange={handleChange} />
+                    </ItemInfo>
+                    <ItemInfo>
+                        Description:
+                        <input type="text" name="Description" id="description" value={selectedItem.Description || ''} onChange={handleChange} />
+                    </ItemInfo>
+                    <ItemInfo>
+                        Quantity:
+                        <input type="number" name="Quantity" id="quantity" value={selectedItem.Quantity || ''} onChange={handleChange} />
+                    </ItemInfo>
+                    <button type="button" onClick={handleSubmit}>Submit</button>
+                    {success ? <></> : <h4>Data Invalid</h4>}
+                </Form>
+            </DataContainer>
+        </>
+
     )
 }
