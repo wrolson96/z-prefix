@@ -11,6 +11,14 @@ To get started with Fantastic Film Finds, follow these simple steps:
 3. Run `docker compose up` in the **z-prefix** directory
 4. Open your browser and navigate to http://localhost:3000 to access the app.
 
+## If Things Aren't Working For `docker compose up` initially
+
+1. run `npm install` in both **frontend** and **api**
+2. run in order in **api**:
+   - `npx knex migrate:latest`
+   - `npx knex seed:run`
+3. run `docker compose up` in **z-prefix**
+
 ## Pages
 
 ### Current Inventory
