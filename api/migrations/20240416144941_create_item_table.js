@@ -9,6 +9,7 @@ exports.up = function (knex) {
     table.string("Item Name").notNullable();
     table.string("Description", 10000).notNullable();
     table.integer("Quantity").notNullable();
+    table.string("Image");
   });
 };
 

@@ -41,18 +41,26 @@ const HeaderText = styled.h1`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `
+const Image = styled.img`
+    height:80px;
+    margin: 10px;
+    border: solid;
+    border-radius: 40px;
+    box-shadow: 2px 2px 5px 5px #000040;
+`
 
 export default function CreateAccount() {
 
     return (
         <>
             <HeaderContainer>
-                <HeaderText>Create New Item</HeaderText>
+                <HeaderText>Profile</HeaderText>
             </HeaderContainer>
             <ProfileContainer>
+                <Image src={cookie.parse(document.cookie).profilepic} alt="profile pic" />
                 <TextContainer>
                     <UserInfo>Username: {cookie.parse(document.cookie).username}</UserInfo>
-                    <UserInfo>Name: {cookie.parse(document.cookie).firstName} {cookie.parse(document.cookie).lastName}</UserInfo>
+                    <p>Name: {cookie.parse(document.cookie).firstName} {cookie.parse(document.cookie).lastName}</p>
                 </TextContainer>
             </ProfileContainer>
         </>

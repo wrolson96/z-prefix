@@ -3,24 +3,20 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom"
 
 const ItemContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: white;
     padding: 5px;
     margin: 5px;
     border: solid;
     border-radius: 10px;
-    width: 500px;
+    max-width: 500px;
+    height:auto;
+    box-shadow: 2px 2px 10px 5px #000040;
 `
 const TextContainer = styled.form`
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding:20px;
-`
-const UserInfo = styled.p`
-    padding-bottom:20px;
 `
 const HeaderContainer = styled.div`
 display:flex;
@@ -41,33 +37,41 @@ background: -webkit-linear-gradient(#fbd127,#fb0f00);
 
 export default function CreateAccount() {
     const { id } = useParams()
-    const [selectedItem, setSelectedItem] = useState()
+    const [selectedItem, setSelectedItem] = useState([])
 
     useEffect(() => {
         fetch(`http://localhost:8080/item/${id}`)
             .then(res => res.json())
-            .then(data => setSelectedItem(data[0]))
-    }, [])
+            .then(data => {
+                console.log(data)
+                setSelectedItem(data[0])
+            })
+    }, [id])
 
 
+    if (selectedItem.length === 0) {
+        return
+    } else {
+        return (
+            <>
+                <HeaderContainer>
+                    <HeaderText>{selectedItem['Item Name']}</HeaderText>
+                </HeaderContainer>
+                <ItemContainer>
+                    <TextContainer>
+                        {selectedItem ?
+                            <>
+                                <p>Description: {selectedItem.Description} </p>
+                            </> : <></>
 
-    return (
-        <>
-            <HeaderContainer>
-                <HeaderText>{selectedItem['Item Name']}</HeaderText>
-            </HeaderContainer>
-            <ItemContainer>
-                <TextContainer>
-                    {selectedItem ?
-                        <>
-                            <UserInfo>Description: {selectedItem.Description} </UserInfo>
-                        </> : <></>
+                        }
 
-                    }
+                    </TextContainer>
+                </ItemContainer>
+            </>
 
-                </TextContainer>
-            </ItemContainer>
-        </>
+        )
 
-    )
+    }
+
 }

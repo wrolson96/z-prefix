@@ -30,11 +30,12 @@ const NavbarLinks = styled.p`
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
-  text-decoration: none;
   font-size: 17px;
   &:hover {
     color: black;
     background-color: #ddd;
+    cursor: pointer;
+    text-decoration: none;
   }
 `;
 const Header = styled.header`
@@ -78,7 +79,7 @@ export default function App() {
   const navigate = useNavigate();
 
   const Logout = () => {
-    document.cookie = "logedIn=false";
+    document.cookie = "loggedIn=false";
     document.cookie = "firstName=null";
     document.cookie = "lastName=null";
     document.cookie = "username=null";
@@ -90,7 +91,7 @@ export default function App() {
         <Link to="/">
           <NavbarLinks className="active">Home</NavbarLinks>
         </Link>
-        {cookie.parse(document.cookie).logedIn === "true" ? (
+        {cookie.parse(document.cookie).loggedIn === "true" ? (
           <>
             <Link to={`/myInventory/${cookie.parse(document.cookie).id}`}>
               <NavbarLinks className="active">My Inventory</NavbarLinks>
@@ -122,7 +123,7 @@ export default function App() {
       <BodyContainer>
         <Display>
           <Routes>
-            {cookie.parse(document.cookie).logedIn === "true" ? (
+            {cookie.parse(document.cookie).loggedIn === "true" ? (
               <>
                 <Route path="/" element={<DisplayInventory />} />
                 <Route path="/display/:id" element={<DisplayItem />} />

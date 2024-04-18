@@ -54,20 +54,21 @@ export default function CreateAccount() {
         fetch(`http://localhost:8080/password/${username}`)
             .then(res => res.json())
             .then(resPW => {
-                if (resPW.length == 0) {
+                if (resPW.length === 0) {
                     var check = false
                 } else {
-                    var check = bcrypt.compareSync(password, resPW[0].Password)
+                    check = bcrypt.compareSync(password, resPW[0].Password)
                 }
                 if (check) {
                     fetch(`http://localhost:8080/userVerify/${username}`)
                         .then(res => res.json())
                         .then(data => {
-                            document.cookie = "logedIn=true"
+                            document.cookie = "loggedIn=true"
                             document.cookie = `id=${data[0].id}`
                             document.cookie = `username=${data[0].Username}`
                             document.cookie = `firstName=${data[0]['First Name']}`
                             document.cookie = `lastName=${data[0]['Last Name']}`
+                            document.cookie = `profilepic=${data[0]['Image']}`
                             navigate(`/myInventory/${data[0].id}`)
                         })
                 } else {
