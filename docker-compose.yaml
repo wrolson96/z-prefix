@@ -3,8 +3,8 @@ services:
  frontend:
     build: ./frontend
     container_name: frontend_container
-    volumes:
-      - "./frontend:/frontend"
+    # volumes:
+    #   - "./frontend:/frontend"
     ports:
       - "3000:3000"
     networks:
@@ -15,8 +15,8 @@ services:
  api:
     build: ./api
     container_name: api_container
-    volumes:
-      - "./api:/api"
+    # volumes:
+    #   - "./api:/api"
     ports:
       - "8080:8080"
     networks:
@@ -35,8 +35,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: inventory_db
-    volumes:
-      - ./db:/var/lib/postgresql/data
+    # volumes:
+    #   - ./db:/var/lib/postgresql/data
     networks:
       - app-network
 

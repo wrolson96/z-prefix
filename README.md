@@ -9,15 +9,15 @@ To get started with Fantastic Film Finds, follow these simple steps:
 1. Clone [this repository](https://github.com/wrolson96/z-prefix) to your local machine.
 2. Ensure **docker** is running on your local machine
 3. Run `docker compose up` in the **z-prefix** directory
-4. Open your browser and navigate to http://localhost:3000 to access the app.
+4. run in order in **api**:
+   - `npx knex migrate:latest`
+   - `npx knex seed:run`
+5. Open your browser and navigate to http://localhost:3000 to access the app.
 
 ## If Things Aren't Working For `docker compose up` initially
 
 1. run `npm install` in both **frontend** and **api**
-2. run in order in **api**:
-   - `npx knex migrate:latest`
-   - `npx knex seed:run`
-3. run `docker compose up` in **z-prefix**
+2. run `docker compose up` in **z-prefix**
 
 ## Pages
 
