@@ -53,7 +53,7 @@ export default function DisplayMyInventory() {
         fetch(`http://localhost:8080/inventory/${cookie.parse(document.cookie).id}`)
             .then(res => res.json())
             .then(data => setItems(data))
-    }, [])
+    }, [items])
 
     const handleDelete = (event) => {
         let id = event.target.id

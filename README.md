@@ -21,6 +21,9 @@ Browse through all current inventory of film memorabilia. Both logged in and unr
 
 Existing users can log in [here](http://localhost:3000/login) to their accounts securely to access their inventory, profile, and create new inventory entries. Both username and password are required log in and if one or both categories fail the user will be propted to try again.
 
+- Test Username: TheDude
+- Test Password: 123
+
 ### Create Account
 
 New to Fantastic Film Finds? Create your account [here](http://localhost:3000/createAccount) to start building your film memorabilia collection and sharing with the community. All categories are required to create an account.
